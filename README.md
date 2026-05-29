@@ -1,4 +1,4 @@
-DigitalFreq35
+0x0000_waveform_signal_out
 Copyright (c) 2026 Berke
 
 An open-source desktop music player application.
