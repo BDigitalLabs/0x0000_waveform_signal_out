@@ -1,0 +1,143 @@
+/* main_window.qss */
+
+QMainWindow, QWidget#mainPanel, QWidget#volumePopup {
+    background-color: {BACKGROUND};
+    color: {TEXT};
+}
+
+
+
+QLabel#timeLabel, QLabel#musicNameLabel, QLabel#volumeLabel {
+    color: {TEXT};
+}
+
+
+QMenuBar {
+    background-color: {BACKGROUND};
+    border-bottom: 1px solid {BORDER};
+    color: {TEXT};
+}
+
+QMenuBar::item:selected {
+    background-color: {HOVER_BACKGROUND};
+    color: {ACCENT};
+}
+
+QMenu {
+    background-color: {BACKGROUND};
+    border: 1px solid {BORDER};
+    padding: 4px;
+}
+
+QMenu::item {
+    background-color: transparent;
+    padding: 6px 24px; 
+    border-radius: 4px;
+    color: {TEXT};
+}
+
+QMenu::item:selected {
+    background-color: {HOVER_BACKGROUND};
+    color: {ACCENT};  
+}
+
+QFrame#line1 , QFrame#line2 {
+    background-color: {LINE};
+    border: none;
+    max-height: 1px;
+}
+
+QFrame#label_line {
+    background-color: {LINE};
+    border: none;
+    max-width: 1px;
+    max-height: 30px;
+}
+
+QWidget#controlPanel, QWidget#trackInfoPanel {
+    border-image: url("assets/panel_background.png") 0 0 0 0 stretch stretch;
+}
+
+
+QPushButton#playButton,QPushButton#volumeButton, QPushButton#stopButton {
+    background-color: {BUTTON_BACKGROUND};
+    border-radius: 6px;
+
+    border: 1px solid {BUTTON_BORDER}; 
+
+    border-top: 1px solid {BUTTON_HIGHLIGHT}; 
+    
+    border-bottom: 1px solid {BUTTON_SHADOW};   
+}
+
+
+QPushButton#playButton:hover,QPushButton#volumeButton:hover, QPushButton#stopButton:hover { 
+    background-color: {BUTTON_HOVER};
+}
+
+QPushButton#playButton:pressed,QPushButton#volumeButton:pressed, QPushButton#stopButton:pressed { 
+    background-color: {BUTTON_PRESSED};
+    
+    border-top: 1px solid {BUTTON_SHADOW}; 
+    border-bottom: 1px solid {BUTTON_HIGHLIGHT};
+}
+
+/* Volume Meter and Progress Bar*/
+QProgressBar#volumeMeter {
+    background-color: {PANEL_BACKGROUND};
+    border-top: 1px solid {BORDER};
+    border-radius: 0px;
+    text-align: center;
+}
+
+QProgressBar#progressBar {
+    color: {TEXT};
+    background-color: {PANEL_BACKGROUND};
+    border-bottom: 1px solid {BORDER};
+    border-radius: 0px;
+    text-align: center;
+}
+
+QProgressBar#volumeMeter::chunk, QProgressBar#progressBar::chunk {
+    background-color: {ACCENT};
+    border-radius: 0px; 
+}
+
+/* Seeker Slider */
+QSlider::groove:horizontal#seekSlider {
+    border: none;
+    height: 6px;         
+    background-color: {SLIDER_TRACK_BACKGROUND};
+}
+
+QSlider::sub-page:horizontal#seekSlider {
+    background: {ACCENT};
+    border-radius: 3px;  
+}
+
+QSlider::handle:horizontal#seekSlider {
+    background: {TEXT};
+    width: 14px;        
+    height: 14px;        
+    border-radius: 7px;   
+    margin: -4px 0;       
+}
+
+QSlider::groove:vertical#volumeSlider{
+    border: none;
+    width: 6px;         
+    background-color: {SLIDER_TRACK_BACKGROUND};
+}
+
+QSlider::add-page:vertical#volumeSlider{
+    background: {ACCENT};
+    border-radius: 3px;  
+}
+
+
+QSlider::handle:vertical#volumeSlider {
+    background: {TEXT};
+    height: 14px;
+    margin: 0 -4px;
+    border-radius: 7px;
+}
