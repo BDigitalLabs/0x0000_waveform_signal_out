@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QFrame,
-    QLabel, QPushButton, QSlider, QMessageBox, QProgressBar
+    QLabel, QPushButton, QSlider, QMessageBox, QProgressBar,
+    QListWidget
 )
 from PySide6.QtGui import QColor, QPen, QIcon, QFont, QFontDatabase
 from PySide6.QtCore import Qt, QSize
@@ -20,6 +21,12 @@ class Ui_MainWindow:
         self.play_icon = QIcon(resource_path("assets/play_button_icon.png"))
         self.pause_icon = QIcon(resource_path("assets/pause_button_icon.png"))
         self.stop_icon = QIcon(resource_path("assets/stop_button_icon.png"))
+
+        self.repeat_one_icon = QIcon(resource_path("assets/repeat_one_icon.png"))
+        self.repeat_all_icon = QIcon(resource_path("assets/repeat_all_icon.png"))
+        self.repeat_off_icon = QIcon(resource_path("assets/repeat_off_icon.png"))
+
+        
         
         time_label_font_id = QFontDatabase.addApplicationFont(resource_path("assets/ShareTechMono-Regular.ttf"))
         time_label_font_family = QFontDatabase.applicationFontFamilies(time_label_font_id)[0] if time_label_font_id != -1 else "Monospace"
@@ -31,12 +38,14 @@ class Ui_MainWindow:
             "BACKGROUND": "#000000",
             "PANEL_BACKGROUND": "#000000",
             "SLIDER_TRACK_BACKGROUND":"#505050",
-            "BUTTON_BACKGROUND": "#505050",
-            "BUTTON_PRESSED":"#383838",
-            "BUTTON_HOVER": "#5A5A5A",
-            "BUTTON_BORDER": "#3A3A3A",
-            "BUTTON_HIGHLIGHT":"rgba(255, 255, 255, 0.25)",
-            "BUTTON_SHADOW":"#151515",
+            "CONTROL_BUTTON_BACKGROUND": "#505050",
+            "CONTROL_BUTTON_PRESSED":"#383838",
+            "CONTROL_BUTTON_HOVER": "#5A5A5A",
+            "CONTROL_BUTTON_BORDER": "#3A3A3A",
+            "CONTROL_BUTTON_HIGHLIGHT":"rgba(255, 255, 255, 0.25)",
+            "CONTROL_BUTTON_SHADOW":"#151515",
+            "REPEAT_MODE_BUTTON_BACKGROUND":"#000000",
+            "REPEAT_MODE_BUTTON_HOVER":"#101010",
             "HOVER_BACKGROUND": "#29292e", 
             "TEXT": "#e1e1e6",         
             "ACCENT": "#00a8ff",
@@ -66,17 +75,31 @@ class Ui_MainWindow:
         # ====== Menu Bar ======
         menu_bar = window.menuBar() 
         menu_file = menu_bar.addMenu("&File")
-        self.open_action = menu_file.addAction("&Open...\tCtrl+O")
+        self.open_action = menu_file.addAction("Open")
+        self.open_folder_action = menu_file.addAction("Open Folder")
+        menu_file.addSeparator()
+        self.toggle_recursive_action = menu_file.addAction("Toggle Recursive")
+        self.toggle_recursive_action.setCheckable(True)
         menu_file.addSeparator()
         self.exit_action = menu_file.addAction("Exit")
+
+        menu_view = menu_bar.addMenu("&View")
+        self.toggle_playlist_action = menu_view.addAction("Toggle Playlist")
+        self.toggle_playlist_action.setCheckable(True)
 
         menu_help = menu_bar.addMenu("&Help")
         self.about_action = menu_help.addAction("About")
 
+        # ====== Central Container ======
+        central_container = QWidget()
+        window.setCentralWidget(central_container)
+        central_layout = QHBoxLayout(central_container)
+        central_layout.setContentsMargins(0, 0, 0, 0)
+        central_layout.setSpacing(0)
+
         # ====== Main Panel ======
         main_panel = QWidget()
         main_panel.setObjectName("mainPanel")
-        window.setCentralWidget(main_panel)
         main_panel_layout = QVBoxLayout(main_panel)
         main_panel_layout.setContentsMargins(0, 0, 0, 0)
         main_panel_layout.setSpacing(0)
@@ -109,6 +132,8 @@ class Ui_MainWindow:
         line1.setFrameShape(QFrame.Shape.HLine)
         line1.setFrameShadow(QFrame.Shadow.Sunken)
 
+
+        # ====== Waveform Chart, Volume Meter, Progress Bar ======
         self.progress_bar = QProgressBar()
         self.progress_bar.setObjectName("progressBar")
         self.progress_bar.setRange(0, 0)
@@ -176,6 +201,42 @@ class Ui_MainWindow:
         main_panel_layout.addWidget(self.volume_meter, 0)
         main_panel_layout.addWidget(line2, 0)
         main_panel_layout.addWidget(control_panel, 0)
+
+
+        # ====== Playlist Panel ======
+        self.playlist_panel = QWidget()
+        self.playlist_panel.setObjectName("playlistPanel")
+        self.playlist_panel.setFixedWidth(200)
+        self.playlist_panel.hide()  # Closed in starting
+
+        playlist_panel_layout = QVBoxLayout(self.playlist_panel)
+        playlist_panel_layout.setContentsMargins(1, 1, 1, 1)
+        playlist_panel_layout.setSpacing(0)
+
+
+        self.repeat_mode_button=QPushButton()
+        self.repeat_mode_button.setObjectName("repeatModeButton")
+        self.repeat_mode_button.setFixedHeight(30)
+        self.repeat_mode_button.setIcon(self.repeat_off_icon)
+        self.repeat_mode_button.setIconSize(QSize(25,25))
+
+        line3 = QFrame()
+        line3.setObjectName("line3")
+        line3.setFrameShape(QFrame.Shape.HLine)
+        line3.setFrameShadow(QFrame.Shadow.Sunken)
+
+
+        self.playlist_widget = QListWidget()
+        self.playlist_widget.setObjectName("playlistWidget")
+        self.playlist_widget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+
+        playlist_panel_layout.addWidget(self.repeat_mode_button,0)
+        playlist_panel_layout.addWidget(line3,0)
+        playlist_panel_layout.addWidget(self.playlist_widget,1)
+
+
+        central_layout.addWidget(self.playlist_panel, 0)
+        central_layout.addWidget(main_panel, 1)
 
         self.apply_theme(window, resource_path("ui/styles/main_window.qss"))
 

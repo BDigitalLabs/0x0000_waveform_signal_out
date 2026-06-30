@@ -5,7 +5,22 @@ QMainWindow, QWidget#mainPanel, QWidget#volumePopup {
     color: {TEXT};
 }
 
+QWidget#playlistPanel {
+    border: 1px solid {TEXT};
+    background-color: {PANEL_BACKGROUND};
+    color: {TEXT};
+}
 
+QWidget#playlistControlPanel {
+    border-bottom: 1px solid {TEXT};
+    background-color: {PANEL_BACKGROUND};
+}
+
+
+
+QListWidget#playlistWidget{
+    background-color: {PANEL_BACKGROUND};
+}
 
 QLabel#timeLabel, QLabel#musicNameLabel, QLabel#volumeLabel {
     color: {TEXT};
@@ -18,9 +33,18 @@ QMenuBar {
     color: {TEXT};
 }
 
+
+
 QMenuBar::item:selected {
     background-color: {HOVER_BACKGROUND};
     color: {ACCENT};
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: {LINE};
+    /* Top/Bottom , Left,Right*/
+    margin: 5px 0px;
 }
 
 QMenu {
@@ -41,7 +65,7 @@ QMenu::item:selected {
     color: {ACCENT};  
 }
 
-QFrame#line1 , QFrame#line2 {
+QFrame#line1 , QFrame#line2, QFrame#line3 {
     background-color: {LINE};
     border: none;
     max-height: 1px;
@@ -58,28 +82,37 @@ QWidget#controlPanel, QWidget#trackInfoPanel {
     border-image: url("assets/panel_background.png") 0 0 0 0 stretch stretch;
 }
 
+QPushButton#repeatModeButton {
+    background-color: {REPEAT_MODE_BUTTON_BACKGROUND};
+    border-radius: 0px;
+}
+
+QPushButton#repeatModeButton:hover {
+    background-color: {REPEAT_MODE_BUTTON_HOVER};
+}
+
 
 QPushButton#playButton,QPushButton#volumeButton, QPushButton#stopButton {
-    background-color: {BUTTON_BACKGROUND};
+    background-color: {CONTROL_BUTTON_BACKGROUND};
     border-radius: 6px;
 
-    border: 1px solid {BUTTON_BORDER}; 
+    border: 1px solid {CONTROL_BUTTON_BORDER}; 
 
-    border-top: 1px solid {BUTTON_HIGHLIGHT}; 
+    border-top: 1px solid {CONTROL_BUTTON_HIGHLIGHT}; 
     
-    border-bottom: 1px solid {BUTTON_SHADOW};   
+    border-bottom: 1px solid {CONTROL_BUTTON_SHADOW};   
 }
 
 
 QPushButton#playButton:hover,QPushButton#volumeButton:hover, QPushButton#stopButton:hover { 
-    background-color: {BUTTON_HOVER};
+    background-color: {CONTROL_BUTTON_HOVER};
 }
 
 QPushButton#playButton:pressed,QPushButton#volumeButton:pressed, QPushButton#stopButton:pressed { 
-    background-color: {BUTTON_PRESSED};
+    background-color: {CONTROL_BUTTON_PRESSED};
     
-    border-top: 1px solid {BUTTON_SHADOW}; 
-    border-bottom: 1px solid {BUTTON_HIGHLIGHT};
+    border-top: 1px solid {CONTROL_BUTTON_SHADOW}; 
+    border-bottom: 1px solid {CONTROL_BUTTON_HIGHLIGHT};
 }
 
 /* Volume Meter and Progress Bar*/
